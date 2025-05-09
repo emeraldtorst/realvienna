@@ -372,36 +372,180 @@
                         <p class="mb-6">Not sure where something belongs? Search or tap an item:</p>
                         
                         <div class="bg-white rounded-xl p-4 shadow-inner">
-                            <div class="flex mb-4">
-                                <input type="text" placeholder="Search items..." class="flex-grow px-4 py-2 rounded-l-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-green-400">
-                                <button class="bg-green-500 text-white px-4 py-2 rounded-r-lg">
+                            <div class="flex mb-4 relative">
+                                <input type="text" 
+                                    id="wasteSearch" 
+                                    placeholder="Search items..." 
+                                    class="flex-grow px-4 py-2 rounded-l-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-green-400">
+                                <button class="bg-green-500 text-white px-4 py-2 rounded-r-lg hover:bg-green-600 transition">
                                     <i class="fas fa-search"></i>
                                 </button>
+                                <!-- Autosuggest dropdown -->
+                                <div id="suggestions" class="absolute top-full left-0 right-0 bg-white border border-gray-200 rounded-lg shadow-lg mt-1 hidden z-50 max-h-60 overflow-y-auto"></div>
                             </div>
                             
-                            <div class="grid grid-cols-2 gap-2">
-                                <button class="bg-gray-100 hover:bg-green-100 rounded-lg py-2 px-3 text-sm transition flex items-center">
-                                    <i class="fas fa-pizza-slice text-coral-500 mr-2"></i> Pizza box
-                                </button>
-                                <button class="bg-gray-100 hover:bg-blue-100 rounded-lg py-2 px-3 text-sm transition flex items-center">
-                                    <i class="fas fa-wine-bottle text-blue-500 mr-2"></i> Glass bottle
-                                </button>
-                                <button class="bg-gray-100 hover:bg-yellow-100 rounded-lg py-2 px-3 text-sm transition flex items-center">
-                                    <i class="fas fa-shopping-bag text-yellow-500 mr-2"></i> Plastic bag
-                                </button>
-                                <button class="bg-gray-100 hover:bg-coral-100 rounded-lg py-2 px-3 text-sm transition flex items-center">
-                                    <i class="fas fa-coffee text-brown-500 mr-2"></i> Coffee cup
-                                </button>
+                            <div class="bg-white rounded-xl p-4 md:p-6 shadow-lg">
+                                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                                    <!-- Paper & Cardboard Section -->
+                                    <div class="bg-gradient-to-br from-indigo-50 to-blue-50 rounded-xl p-4">
+                                        <h4 class="font-fredoka text-lg font-bold text-indigo-600 mb-4 flex items-center">
+                                            <i class="fas fa-newspaper mr-2"></i> Paper & Cardboard
+                                        </h4>
+                                        <div class="space-y-3">
+                                            <button class="w-full bg-white hover:bg-indigo-50 rounded-lg p-3 transition flex items-center justify-between group" data-waste="newspaper">
+                                                <div class="flex items-center min-w-0">
+                                                    <span class="text-2xl mr-3 flex-shrink-0">📰</span>
+                                                    <span class="font-medium truncate">Newspaper</span>
+                                                </div>
+                                                <i class="fas fa-chevron-right text-indigo-400 opacity-0 group-hover:opacity-100 transition ml-3 flex-shrink-0"></i>
+                                            </button>
+                                            <button class="w-full bg-white hover:bg-indigo-50 rounded-lg p-3 transition flex items-center justify-between group" data-waste="cardboard box">
+                                                <div class="flex items-center min-w-0">
+                                                    <span class="text-2xl mr-3 flex-shrink-0">📦</span>
+                                                    <span class="font-medium truncate">Cardboard</span>
+                                                </div>
+                                                <i class="fas fa-chevron-right text-indigo-400 opacity-0 group-hover:opacity-100 transition ml-3 flex-shrink-0"></i>
+                                            </button>
+                                            <button class="w-full bg-white hover:bg-indigo-50 rounded-lg p-3 transition flex items-center justify-between group" data-waste="magazine">
+                                                <div class="flex items-center min-w-0">
+                                                    <span class="text-2xl mr-3 flex-shrink-0">📚</span>
+                                                    <span class="font-medium truncate">Magazine</span>
+                                                </div>
+                                                <i class="fas fa-chevron-right text-indigo-400 opacity-0 group-hover:opacity-100 transition ml-3 flex-shrink-0"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <!-- Glass Section -->
+                                    <div class="bg-gradient-to-br from-violet-50 to-purple-50 rounded-xl p-4">
+                                        <h4 class="font-fredoka text-lg font-bold text-violet-600 mb-4 flex items-center">
+                                            <i class="fas fa-wine-bottle mr-2"></i> Glass
+                                        </h4>
+                                        <div class="space-y-3">
+                                            <button class="w-full bg-white hover:bg-violet-50 rounded-lg p-3 transition flex items-center justify-between group" data-waste="clear glass bottle">
+                                                <div class="flex items-center min-w-0">
+                                                    <span class="text-2xl mr-3 flex-shrink-0">🍾</span>
+                                                    <span class="font-medium truncate">Clear Glass Bottle</span>
+                                                </div>
+                                                <i class="fas fa-chevron-right text-violet-400 opacity-0 group-hover:opacity-100 transition ml-3 flex-shrink-0"></i>
+                                            </button>
+                                            <button class="w-full bg-white hover:bg-violet-50 rounded-lg p-3 transition flex items-center justify-between group" data-waste="colored glass bottle">
+                                                <div class="flex items-center min-w-0">
+                                                    <span class="text-2xl mr-3 flex-shrink-0">🍾</span>
+                                                    <span class="font-medium truncate">Colored Glass Bottle</span>
+                                                </div>
+                                                <i class="fas fa-chevron-right text-violet-400 opacity-0 group-hover:opacity-100 transition ml-3 flex-shrink-0"></i>
+                                            </button>
+                                            <button class="w-full bg-white hover:bg-violet-50 rounded-lg p-3 transition flex items-center justify-between group" data-waste="clear glass jar">
+                                                <div class="flex items-center min-w-0">
+                                                    <span class="text-2xl mr-3 flex-shrink-0">🥫</span>
+                                                    <span class="font-medium truncate">Clear Glass Jar</span>
+                                                </div>
+                                                <i class="fas fa-chevron-right text-violet-400 opacity-0 group-hover:opacity-100 transition ml-3 flex-shrink-0"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <!-- Lightweight Packaging Section -->
+                                    <div class="bg-gradient-to-br from-amber-50 to-yellow-50 rounded-xl p-4">
+                                        <h4 class="font-fredoka text-lg font-bold text-amber-600 mb-4 flex items-center">
+                                            <i class="fas fa-recycle mr-2"></i> Lightweight Packaging
+                                        </h4>
+                                        <div class="space-y-3">
+                                            <button class="w-full bg-white hover:bg-amber-50 rounded-lg p-3 transition flex items-center justify-between group" data-waste="plastic bottle">
+                                                <div class="flex items-center min-w-0">
+                                                    <span class="text-2xl mr-3 flex-shrink-0">🧴</span>
+                                                    <span class="font-medium truncate">Plastic Bottle</span>
+                                                </div>
+                                                <i class="fas fa-chevron-right text-amber-400 opacity-0 group-hover:opacity-100 transition ml-3 flex-shrink-0"></i>
+                                            </button>
+                                            <button class="w-full bg-white hover:bg-amber-50 rounded-lg p-3 transition flex items-center justify-between group" data-waste="aluminum can">
+                                                <div class="flex items-center min-w-0">
+                                                    <span class="text-2xl mr-3 flex-shrink-0">🥫</span>
+                                                    <span class="font-medium truncate">Aluminum Can</span>
+                                                </div>
+                                                <i class="fas fa-chevron-right text-amber-400 opacity-0 group-hover:opacity-100 transition ml-3 flex-shrink-0"></i>
+                                            </button>
+                                            <button class="w-full bg-white hover:bg-amber-50 rounded-lg p-3 transition flex items-center justify-between group" data-waste="tetra pak">
+                                                <div class="flex items-center min-w-0">
+                                                    <span class="text-2xl mr-3 flex-shrink-0">🥛</span>
+                                                    <span class="font-medium truncate">Tetra Pak</span>
+                                                </div>
+                                                <i class="fas fa-chevron-right text-amber-400 opacity-0 group-hover:opacity-100 transition ml-3 flex-shrink-0"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <!-- Bio Waste Section -->
+                                    <div class="bg-gradient-to-br from-emerald-50 to-green-50 rounded-xl p-4">
+                                        <h4 class="font-fredoka text-lg font-bold text-emerald-600 mb-4 flex items-center">
+                                            <i class="fas fa-leaf mr-2"></i> Bio Waste
+                                        </h4>
+                                        <div class="space-y-3">
+                                            <button class="w-full bg-white hover:bg-emerald-50 rounded-lg p-3 transition flex items-center justify-between group" data-waste="food scraps">
+                                                <div class="flex items-center min-w-0">
+                                                    <span class="text-2xl mr-3 flex-shrink-0">🍎</span>
+                                                    <span class="font-medium truncate">Food Scraps</span>
+                                                </div>
+                                                <i class="fas fa-chevron-right text-emerald-400 opacity-0 group-hover:opacity-100 transition ml-3 flex-shrink-0"></i>
+                                            </button>
+                                            <button class="w-full bg-white hover:bg-emerald-50 rounded-lg p-3 transition flex items-center justify-between group" data-waste="coffee grounds">
+                                                <div class="flex items-center min-w-0">
+                                                    <span class="text-2xl mr-3 flex-shrink-0">☕</span>
+                                                    <span class="font-medium truncate">Coffee Grounds</span>
+                                                </div>
+                                                <i class="fas fa-chevron-right text-emerald-400 opacity-0 group-hover:opacity-100 transition ml-3 flex-shrink-0"></i>
+                                            </button>
+                                            <button class="w-full bg-white hover:bg-emerald-50 rounded-lg p-3 transition flex items-center justify-between group" data-waste="tea bags">
+                                                <div class="flex items-center min-w-0">
+                                                    <span class="text-2xl mr-3 flex-shrink-0">🫖</span>
+                                                    <span class="font-medium truncate">Tea Bags</span>
+                                                </div>
+                                                <i class="fas fa-chevron-right text-emerald-400 opacity-0 group-hover:opacity-100 transition ml-3 flex-shrink-0"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <!-- Residual Waste Section -->
+                                    <div class="bg-gradient-to-br from-slate-50 to-gray-50 rounded-xl p-4">
+                                        <h4 class="font-fredoka text-lg font-bold text-slate-600 mb-4 flex items-center">
+                                            <i class="fas fa-trash mr-2"></i> Residual Waste
+                                        </h4>
+                                        <div class="space-y-3">
+                                            <button class="w-full bg-white hover:bg-slate-50 rounded-lg p-3 transition flex items-center justify-between group" data-waste="pizza box">
+                                                <div class="flex items-center min-w-0">
+                                                    <span class="text-2xl mr-3 flex-shrink-0">🍕</span>
+                                                    <span class="font-medium truncate">Pizza Box</span>
+                                                </div>
+                                                <i class="fas fa-chevron-right text-slate-400 opacity-0 group-hover:opacity-100 transition ml-3 flex-shrink-0"></i>
+                                            </button>
+                                            <button class="w-full bg-white hover:bg-slate-50 rounded-lg p-3 transition flex items-center justify-between group" data-waste="plastic bag">
+                                                <div class="flex items-center min-w-0">
+                                                    <span class="text-2xl mr-3 flex-shrink-0">🛍️</span>
+                                                    <span class="font-medium truncate">Plastic Bag</span>
+                                                </div>
+                                                <i class="fas fa-chevron-right text-slate-400 opacity-0 group-hover:opacity-100 transition ml-3 flex-shrink-0"></i>
+                                            </button>
+                                            <button class="w-full bg-white hover:bg-slate-50 rounded-lg p-3 transition flex items-center justify-between group" data-waste="coffee capsule">
+                                                <div class="flex items-center min-w-0">
+                                                    <span class="text-2xl mr-3 flex-shrink-0">☕</span>
+                                                    <span class="font-medium truncate">Coffee Capsule</span>
+                                                </div>
+                                                <i class="fas fa-chevron-right text-slate-400 opacity-0 group-hover:opacity-100 transition ml-3 flex-shrink-0"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                     
-                    <div class="md:w-1/2 p-8 flex items-center">
-                        <div class="text-center w-full">
-                            <div class="w-32 h-32 mx-auto mb-6">
-<dotlottie-wc src="https://lottie.host/7bc4bc81-4199-4f42-9319-8c13efb61b5a/VOzXsgCG2u.lottie" background="transparent" speed="1" style="width: 100%; height: 100%;" loop autoplay></dotlottie-wc>             
+                    <div class="md:w-1/2 p-8 flex items-center justify-center">
+                        <div class="text-center w-full max-w-2xl mx-auto" id="resultContainer">
+                            <div class="w-48 h-48 md:w-64 md:h-64 mx-auto mb-8 transform transition-transform duration-300 hover:scale-105">
+                                <dotlottie-wc src="https://lottie.host/7bc4bc81-4199-4f42-9319-8c13efb61b5a/VOzXsgCG2u.lottie" background="transparent" speed="1" style="width: 100%; height: 100%;" loop autoplay></dotlottie-wc>             
                             </div>
-                            <h4 class="font-fredoka text-xl font-bold mb-2">Pick an item to begin!</h4>
+                            <h4 class="font-fredoka text-2xl md:text-3xl font-bold mb-4">Pick an item to begin!</h4>
                             <p class="text-gray-500">We'll show you exactly where it belongs (and why).</p>
                         </div>
                     </div>
@@ -423,64 +567,34 @@
     <section id="map" class="py-20 px-6 bg-white">
         <div class="container mx-auto">
             <div class="text-center mb-16">
-                <h2 class="font-fredoka text-4xl md:text-5xl font-bold mb-6"><span class="text-yellow-500">Bin Finder</span> Map</h2>
-                <p class="text-xl max-w-3xl mx-auto">Find the nearest recycling bins and waste stations in Vienna - filtered by what you need to toss.</p>
+                <h2 class="font-fredoka text-4xl md:text-5xl font-bold mb-6"><span class="text-yellow-500">Disposal Center</span> (Mistplatz)</h2>
+                <p class="text-xl max-w-3xl mx-auto">Find the nearest waste disposal centers in Vienna - click on the map to view all locations.</p>
             </div>
             
             <div class="bg-gradient-to-br from-yellow-50 to-green-50 rounded-super p-1 shadow-xl mb-12">
                 <div class="bg-white rounded-super overflow-hidden">
-                    <div class="md:flex">
-                        <div class="md:w-1/3 p-6 border-r border-gray-100">
-                            <h3 class="font-fredoka text-xl font-bold mb-4">Filter Bins</h3>
-                            
-                            <div class="space-y-4">
-                                <div class="flex items-center p-3 bg-blue-50 rounded-xl">
-                                    <input type="checkbox" id="paperBins" checked class="w-5 h-5 text-blue-500 rounded focus:ring-blue-400">
-                                    <label for="paperBins" class="ml-3 flex items-center">
-                                        <div class="w-4 h-4 rounded-full bg-blue-500 mr-2"></div>
-                                        Paper & Cardboard
-                                    </label>
-                                </div>
-                                
-                                <div class="flex items-center p-3 bg-yellow-50 rounded-xl">
-                                    <input type="checkbox" id="plasticBins" checked class="w-5 h-5 text-yellow-500 rounded focus:ring-yellow-400">
-                                    <label for="plasticBins" class="ml-3 flex items-center">
-                                        <div class="w-4 h-4 rounded-full bg-yellow-500 mr-2"></div>
-                                        Plastic & Metal
-                                    </label>
-                                </div>
-                                
-                                <div class="flex items-center p-3 bg-green-50 rounded-xl">
-                                    <input type="checkbox" id="bioBins" checked class="w-5 h-5 text-green-500 rounded focus:ring-green-400">
-                                    <label for="bioBins" class="ml-3 flex items-center">
-                                        <div class="w-4 h-4 rounded-full bg-green-500 mr-2"></div>
-                                        Bio Waste
-                                    </label>
-                                </div>
-                                
-                                <div class="flex items-center p-3 bg-purple-50 rounded-xl">
-                                    <input type="checkbox" id="glassBins" checked class="w-5 h-5 text-purple-500 rounded focus:ring-purple-400">
-                                    <label for="glassBins" class="ml-3 flex items-center">
-                                        <div class="w-4 h-4 rounded-full bg-purple-500 mr-2"></div>
-                                        Glass
-                                    </label>
-                                </div>
-                                
-                                <button class="w-full mt-4 py-3 bg-gradient-to-r from-green-400 to-blue-400 text-white rounded-full font-bold btn-hover flex items-center justify-center">
-                                    <i class="fas fa-location-arrow mr-2"></i> Find Near Me
-                                </button>
+                    <a href="https://www.google.com/maps/search/mistplatz+lists/@48.258382,16.3318601,12z/data=!3m1!4b1?entry=ttu&g_ep=EgoyMDI1MDUwNi4wIKXMDSoASAFQAw%3D%3D" 
+                       target="_blank" 
+                       class="block relative group cursor-pointer">
+                        <div class="aspect-w-16 aspect-h-9 w-full bg-gradient-to-br from-blue-50 to-white rounded-super flex items-center justify-center">
+                            <div class="w-64 h-64 transform transition-transform duration-300 group-hover:scale-110">
+                                <dotlottie-wc 
+                                    src="https://lottie.host/2c0c0c0c-0c0c-0c0c-0c0c-0c0c0c0c0c0c/location-pin.lottie"
+                                    background="transparent"
+                                    speed="1"
+                                    style="width: 100%; height: 100%;"
+                                    loop
+                                    autoplay
+                                    onerror="this.src='https://assets9.lottiefiles.com/packages/lf20_49rdyysj.json'"
+                                ></dotlottie-wc>
                             </div>
                         </div>
-                        
-                        <div class="md:w-2/3 h-96 relative">
-                            <div class="absolute inset-0 bg-gray-200 flex items-center justify-center rounded-br-super overflow-hidden">
-                                <div class="text-center">
-                                    <lottie-player src="https://assets8.lottiefiles.com/packages/lf20_vnikrcia.json" background="transparent" speed="1" style="width: 200px; height: 200px;" loop autoplay></lottie-player>
-                                    <p class="text-gray-700 font-medium">Interactive Map (Demo)</p>
-                                </div>
+                        <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-10 transition-all duration-300 rounded-super flex items-center justify-center">
+                            <div class="bg-white px-6 py-3 rounded-full shadow-lg transform transition-transform duration-300 group-hover:scale-110">
+                                <span class="font-fredoka text-lg font-bold text-gray-800">View All Locations</span>
                             </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
             </div>
             
@@ -910,6 +1024,295 @@
                 }, 1000);
             });
         }, 15000);
+
+        // Waste sorting database
+        const wasteDatabase = {
+            // Paper & Cardboard (Red Bin)
+            "newspaper": {
+                category: "Paper & Cardboard",
+                bin: "Red Bin (Rote Tonne)",
+                icon: "fa-newspaper",
+                color: "red",
+                emoji: "📰",
+                instructions: "Clean paper and cardboard only. No food residue, grease, or composite materials like milk cartons.",
+                animation: "https://lottie.host/2c0c0c0c-0c0c-0c0c-0c0c-0c0c0c0c0c0c/paper-recycling.lottie"
+            },
+            "cardboard box": {
+                category: "Paper & Cardboard",
+                bin: "Red Bin (Rote Tonne)",
+                icon: "fa-box",
+                color: "red",
+                emoji: "📦",
+                instructions: "Clean cardboard only. Remove any plastic or metal parts. No soiled or greasy cardboard.",
+                animation: "https://lottie.host/2c0c0c0c-0c0c-0c0c-0c0c-0c0c0c0c0c0c/box-recycling.lottie"
+            },
+            "magazine": {
+                category: "Paper & Cardboard",
+                bin: "Red Bin (Rote Tonne)",
+                icon: "fa-book",
+                color: "red",
+                emoji: "📚",
+                instructions: "Clean magazines and books. Remove plastic covers. No soiled or wet paper.",
+                animation: "https://lottie.host/2c0c0c0c-0c0c-0c0c-0c0c-0c0c0c0c0c0c/book-recycling.lottie"
+            },
+            
+            // Glass (Grey Bins)
+            "clear glass bottle": {
+                category: "Clear Glass",
+                bin: "Grey Bin with Grey Lid (Weißglas)",
+                icon: "fa-wine-bottle",
+                color: "gray",
+                emoji: "🍾",
+                instructions: "Clear glass bottles only. Empty and clean. Remove caps and lids.",
+                animation: "https://lottie.host/2c0c0c0c-0c0c-0c0c-0c0c-0c0c0c0c0c0c/glass-recycling.lottie"
+            },
+            "colored glass bottle": {
+                category: "Colored Glass",
+                bin: "Grey Bin with Green Lid (Buntglas)",
+                icon: "fa-wine-bottle",
+                color: "green",
+                emoji: "🍾",
+                instructions: "Colored glass bottles only. Empty and clean. Remove caps and lids.",
+                animation: "https://lottie.host/2c0c0c0c-0c0c-0c0c-0c0c-0c0c0c0c0c0c/glass-recycling.lottie"
+            },
+            "clear glass jar": {
+                category: "Clear Glass",
+                bin: "Grey Bin with Grey Lid (Weißglas)",
+                icon: "fa-jar",
+                color: "gray",
+                emoji: "🥫",
+                instructions: "Clear glass jars only. Empty and clean. Remove lids and metal rings.",
+                animation: "https://lottie.host/2c0c0c0c-0c0c-0c0c-0c0c-0c0c0c0c0c0c/jar-recycling.lottie"
+            },
+            "colored glass jar": {
+                category: "Colored Glass",
+                bin: "Grey Bin with Green Lid (Buntglas)",
+                icon: "fa-jar",
+                color: "green",
+                emoji: "🥫",
+                instructions: "Colored glass jars only. Empty and clean. Remove lids and metal rings.",
+                animation: "https://lottie.host/2c0c0c0c-0c0c-0c0c-0c0c-0c0c0c0c0c0c/jar-recycling.lottie"
+            },
+            
+            // Plastic & Metal (Yellow Bin)
+            "plastic bottle": {
+                category: "Lightweight Packaging",
+                bin: "Yellow Bin (Gelbe Tonne)",
+                icon: "fa-bottle-water",
+                color: "yellow",
+                emoji: "🧴",
+                instructions: "Empty and rinse. Remove caps. Flatten if possible.",
+                animation: "https://lottie.host/2c0c0c0c-0c0c-0c0c-0c0c-0c0c0c0c0c0c/plastic-recycling.lottie"
+            },
+            "aluminum can": {
+                category: "Lightweight Packaging",
+                bin: "Yellow Bin (Gelbe Tonne)",
+                icon: "fa-can-food",
+                color: "yellow",
+                emoji: "🥫",
+                instructions: "Empty and rinse. Remove labels if possible.",
+                animation: "https://lottie.host/2c0c0c0c-0c0c-0c0c-0c0c-0c0c0c0c0c0c/can-recycling.lottie"
+            },
+            "yogurt cup": {
+                category: "Lightweight Packaging",
+                bin: "Yellow Bin (Gelbe Tonne)",
+                icon: "fa-cup",
+                color: "yellow",
+                emoji: "🥛",
+                instructions: "Empty and rinse. Remove aluminum foil lids.",
+                animation: "https://lottie.host/2c0c0c0c-0c0c-0c0c-0c0c-0c0c0c0c0c0c/container-recycling.lottie"
+            },
+            "tetra pak": {
+                category: "Lightweight Packaging",
+                bin: "Yellow Bin (Gelbe Tonne)",
+                icon: "fa-box",
+                color: "yellow",
+                emoji: "🥛",
+                instructions: "Empty and rinse. Flatten if possible.",
+                animation: "https://lottie.host/2c0c0c0c-0c0c-0c0c-0c0c-0c0c0c0c0c0c/container-recycling.lottie"
+            },
+            
+            // Bio Waste
+            "food scraps": {
+                category: "Bio Waste",
+                bin: "Bio-Waste Bin",
+                icon: "fa-apple-whole",
+                color: "green",
+                emoji: "🍎",
+                instructions: "Fruit and vegetable scraps only. No meat, fish, or dairy products.",
+                animation: "https://lottie.host/2c0c0c0c-0c0c-0c0c-0c0c-0c0c0c0c0c0c/compost.lottie"
+            },
+            "coffee grounds": {
+                category: "Bio Waste",
+                bin: "Bio-Waste Bin",
+                icon: "fa-coffee",
+                color: "green",
+                emoji: "☕",
+                instructions: "Coffee grounds and paper filters only. No plastic capsules.",
+                animation: "https://lottie.host/2c0c0c0c-0c0c-0c0c-0c0c-0c0c0c0c0c0c/coffee-grounds.lottie"
+            },
+            "tea bags": {
+                category: "Bio Waste",
+                bin: "Bio-Waste Bin",
+                icon: "fa-mug-hot",
+                color: "green",
+                emoji: "🫖",
+                instructions: "Tea leaves and paper tea bags only. Remove staples and strings.",
+                animation: "https://lottie.host/2c0c0c0c-0c0c-0c0c-0c0c-0c0c0c0c0c0c/tea-bag.lottie"
+            },
+            
+            // Residual Waste (Black Bin)
+            "pizza box": {
+                category: "Residual Waste",
+                bin: "Black Bin (Schwarze Tonne)",
+                icon: "fa-pizza-slice",
+                color: "gray",
+                emoji: "🍕",
+                instructions: "Greasy or food-soiled cardboard goes in residual waste.",
+                animation: "https://lottie.host/2c0c0c0c-0c0c-0c0c-0c0c-0c0c0c0c0c0c/pizza-box.lottie"
+            },
+            "plastic bag": {
+                category: "Residual Waste",
+                bin: "Black Bin (Schwarze Tonne)",
+                icon: "fa-shopping-bag",
+                color: "gray",
+                emoji: "🛍️",
+                instructions: "Take to collection points at grocery stores or put in residual waste.",
+                animation: "https://lottie.host/2c0c0c0c-0c0c-0c0c-0c0c-0c0c0c0c0c0c/plastic-bag.lottie"
+            },
+            "coffee capsule": {
+                category: "Residual Waste",
+                bin: "Black Bin (Schwarze Tonne)",
+                icon: "fa-coffee",
+                color: "gray",
+                emoji: "☕",
+                instructions: "Plastic capsules go in residual waste. Aluminum capsules can be returned to Nespresso stores.",
+                animation: "https://lottie.host/2c0c0c0c-0c0c-0c0c-0c0c-0c0c0c0c0c0c/coffee-capsule.lottie"
+            },
+            "soiled paper": {
+                category: "Residual Waste",
+                bin: "Black Bin (Schwarze Tonne)",
+                icon: "fa-file",
+                color: "gray",
+                emoji: "📄",
+                instructions: "Paper with food residue, grease, or other contaminants goes in residual waste.",
+                animation: "https://lottie.host/2c0c0c0c-0c0c-0c0c-0c0c-0c0c0c0c0c0c/paper-waste.lottie"
+            }
+        };
+
+        // DOM Elements
+        const searchInput = document.getElementById('wasteSearch');
+        const suggestionsDiv = document.getElementById('suggestions');
+        const resultContainer = document.getElementById('resultContainer');
+        const quickButtons = document.getElementById('quickButtons');
+
+        // Show suggestions based on input
+        searchInput.addEventListener('input', function() {
+            const query = this.value.toLowerCase();
+            if (query.length < 1) {
+                suggestionsDiv.classList.add('hidden');
+                return;
+            }
+
+            const matches = Object.keys(wasteDatabase).filter(item => 
+                item.toLowerCase().includes(query)
+            );
+
+            if (matches.length > 0) {
+                suggestionsDiv.innerHTML = matches.map(item => `
+                    <div class="p-3 hover:bg-gray-100 cursor-pointer flex items-center text-sm md:text-base" data-waste="${item}">
+                        <span class="mr-3 text-xl">${wasteDatabase[item].emoji}</span>
+                        <i class="fas ${wasteDatabase[item].icon} text-${wasteDatabase[item].color}-500 mr-3"></i>
+                        ${item}
+                    </div>
+                `).join('');
+                suggestionsDiv.classList.remove('hidden');
+            } else {
+                suggestionsDiv.classList.add('hidden');
+            }
+        });
+
+        // Handle suggestion clicks
+        suggestionsDiv.addEventListener('click', function(e) {
+            const suggestion = e.target.closest('[data-waste]');
+            if (suggestion) {
+                const wasteItem = suggestion.dataset.waste;
+                searchInput.value = wasteItem;
+                suggestionsDiv.classList.add('hidden');
+                showResult(wasteItem);
+            }
+        });
+
+        // Handle quick button clicks
+        document.addEventListener('click', function(e) {
+            const button = e.target.closest('[data-waste]');
+            if (button) {
+                const wasteItem = button.dataset.waste;
+                showResult(wasteItem);
+                // Update search input value
+                searchInput.value = wasteItem;
+                // Hide suggestions if they're visible
+                suggestionsDiv.classList.add('hidden');
+            }
+        });
+
+        // Update the result display to be more responsive and show in the designated area
+        function showResult(wasteItem) {
+            const item = wasteDatabase[wasteItem];
+            if (!item) return;
+
+            const defaultAnimation = "https://lottie.host/7bc4bc81-4199-4f42-9319-8c13efb61b5a/VOzXsgCG2u.lottie";
+
+            // Update the result container with the selected item's information
+            resultContainer.innerHTML = `
+                <div class="bg-white rounded-xl p-6 md:p-8 lg:p-10 shadow-lg transform transition-all duration-300 hover:shadow-xl max-w-2xl mx-auto">
+                    <div class="flex flex-col items-center gap-8">
+                        <!-- Animation Container -->
+                        <div class="w-40 h-40 md:w-56 md:h-56 lg:w-72 lg:h-72 transform transition-transform duration-300 hover:scale-105">
+                            <dotlottie-wc 
+                                src="${item.animation || defaultAnimation}" 
+                                background="transparent" 
+                                speed="1" 
+                                style="width: 100%; height: 100%;" 
+                                loop 
+                                autoplay
+                                onerror="this.src='${defaultAnimation}'"
+                            ></dotlottie-wc>
+                        </div>
+
+                        <!-- Content Container -->
+                        <div class="text-center w-full">
+                            <h4 class="font-fredoka text-2xl md:text-3xl lg:text-4xl font-bold mb-4">
+                                ${item.emoji} ${wasteItem}
+                            </h4>
+                            <div class="bg-${item.color}-50 rounded-xl p-6 md:p-8 mb-6 shadow-md">
+                                <p class="font-bold text-${item.color}-600 text-lg md:text-xl lg:text-2xl mb-3">
+                                    ${item.bin}
+                                </p>
+                                <p class="text-gray-700 text-base md:text-lg">
+                                    ${item.instructions}
+                                </p>
+                            </div>
+                            <div class="flex justify-center">
+                                <span class="px-4 py-2 bg-${item.color}-100 text-${item.color}-700 rounded-full text-base md:text-lg">
+                                    ${item.category}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            // Add smooth scroll to the result section
+            resultContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        // Close suggestions when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!searchInput.contains(e.target) && !suggestionsDiv.contains(e.target)) {
+                suggestionsDiv.classList.add('hidden');
+            }
+        });
     </script>
 </body>
 </html>
